@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当前要事</title>
+    <meta
+        name="description"
+        content="记录和提醒当前最重要的事，可以设置为浏览器起始页"
+    />
+    <style>
+        /* * {
+            border: 1px solid black;
+        } */
+        body {
+            display: flex;
+            margin: 0;
+            height: 100vh;
+            background-image: url(bg.jpg);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            align-items: center;
+            justify-content: center;
+        }
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #inputBox {
+            display: block;
+            max-width: 90%;
+            padding: 4px 2px;
+            border: 0;
+            border-bottom: 2px solid #fff;
+            background: none;
+            color: #fff;
+            text-align: center;
+            font-size: 2rem;
+            line-height: 1.5;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+        #btn {
+            margin-left: -50px;
+            margin-right: 10px;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            cursor: pointer;
+        }
+        input::placeholder {
+            color: #fff;
+            opacity: 0.7;
+        }
+        input::-webkit-input-placeholder {
+            color: #fff;
+            /* opacity: 0.6; */
+      }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <input id="inputBox" placeholder="最重要的事？" />
+        <span id="btn" onclick="change()">✔</span>
+    </div>
+    <script>
+        let youShi = false;
+
+        function change() {
+            let btn = document.getElementById("btn");
+            let inputBox= document.getElementById("inputBox");
+
+            if (youShi) {
+                youShi = false;
+                btn.innerText = "✔";
+                inputBox.style.borderBottomColor = "#fff";
+                inputBox.value = "";
+                inputBox.readOnly = false;
+                window.localStorage.removeItem("event");
+            } else {
+                youShi = true;
+                btn.innerText = "✘";
+                inputBox.style.borderBottomColor ="transparent";
+                inputBox.readOnly = true;
+                window.localStorage.setItem("event", inputBox.value);
+            }
+        }
+        let data = window.localStorage.getItem("event");
+        if (data) {
+            document.getElementById("inputBox").value = data;
+            change();
+        }
+    </script>
+</body>
+</html>
